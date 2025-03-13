@@ -19,7 +19,9 @@ struct ContentView: View {
                         image.resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50)
+                            .cornerRadius(10)
                     } placeholder: {
+                        //es un indicador de carga
                         ProgressView()
                     }
                     
@@ -29,10 +31,17 @@ struct ContentView: View {
                         Text(agent.description)
                             .font(.subheadline)
                             .lineLimit(2)
+                        
+                        if let role = agent.role {
+                            Text("Rol: \(role.displayName)")
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
             }
             .navigationTitle("Agentes de Valorant")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear{
                 viewModel.fetchAgent()
             }
