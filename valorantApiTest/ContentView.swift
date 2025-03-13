@@ -14,28 +14,30 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             List (viewModel.agents) { agent in
-                HStack{
-                    AsyncImage(url: URL(string: agent.displayIcon)) { image in
-                        image.resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(10)
-                    } placeholder: {
-                        //es un indicador de carga
-                        ProgressView()
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        Text(agent.displayName)
-                            .font(.headline)
-                        Text(agent.description)
-                            .font(.subheadline)
-                            .lineLimit(2)
+                NavigationLink(destination: AgentDetailView(agent: agent)) {
+                    HStack{
+                        AsyncImage(url: URL(string: agent.displayIcon)) { image in
+                            image.resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(10)
+                        } placeholder: {
+                            //es un indicador de carga
+                            ProgressView()
+                        }
                         
-                        if let role = agent.role {
-                            Text("Rol: \(role.displayName)")
-                                .font(.footnote)
-                                .foregroundColor(.gray)
+                        VStack(alignment: .leading) {
+                            Text(agent.displayName)
+                                .font(.headline)
+                            Text(agent.description)
+                                .font(.subheadline)
+                                .lineLimit(2)
+                            
+                            if let role = agent.role {
+                                Text("Rol: \(role.displayName)")
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
+                            }
                         }
                     }
                 }
